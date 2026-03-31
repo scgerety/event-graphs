@@ -22,10 +22,6 @@ filename_dict = {
 }
 
 def main(df, pathname, filename, corrections):
-    """main
-    :param df: pandas DataFrame - the data from the survey download.
-    :param pathname: 
-    """
     correction_df = setup_correction_df(pathname, corrections)
     event_name = filename.replace(".csv", "")
     df = correct_session_names(df, correction_df)
