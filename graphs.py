@@ -11,7 +11,7 @@ import os
 import matplotlib as mpl
 import textwrap
 
-pathname = f"{os.path.abspath(os.path.dirname(__file__))}\\"
+pathname = os.path.abspath(os.path.dirname(__file__))
 filename = "SurveyExport.csv"
 corrections = "Corrections.csv"
 # In this iteration, we're using the filename_dict to loop over three events.
@@ -38,7 +38,7 @@ def main(df, pathname, filename, corrections):
     plot_scores(summary, pathname, event_name)
 
 def setup_folder(pathname, event_name):
-    os.makedirs(f"{pathname}{event_name}Graphs", exist_ok=True)
+    os.makedirs(os.path.join(pathname, event_name, "Graphs"), exist_ok=True)
 
 def setup_correction_df(pathname, corrections):
     session_corrections = pd.read_csv(
@@ -125,7 +125,7 @@ def session_plot(session_name, session_data, event_name):
     for key, spine in session_data_fig.spines.items():
         spine.set_visible(False)
     # Save
-    session_data_fig.get_figure().savefig(f"{pathname}{event_name}Graphs\\{session_name} session ratings.png",
+    session_data_fig.get_figure().savefig(os.path.join(pathname, event_name, "Graphs", f"{session_name} session ratings.png",
                                           bbox_inches="tight")
 def session_scores(df, session_list):
     agreement_values = {
@@ -160,7 +160,7 @@ def plot_scores(summary, pathname, event_name):
         ax.barh(x, y)
         mpl.rcParams["font.size"] = 5
         plt.tight_layout()
-        fig.savefig(f"{pathname}{event_name}Graphs\\{col}.png", format="png")
+        fig.savefig(os.path.join(pathname, event_name, "Graphs", f"{col}.png"), format="png")
 
 if __name__ == "__main__":
     for survey_filename, correction_filename in filename_dict.items():
